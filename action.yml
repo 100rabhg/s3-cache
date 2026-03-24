@@ -1,18 +1,27 @@
 name: "S3 Cache"
-description: "Restore + Save cache to S3"
+description: "Cache dependencies and build artifacts to AWS S3. Restores cache on job start and uploads on job completion."
+
+branding:
+  icon: "archive"
+  color: "blue"
 
 inputs:
   key:
+    description: "Unique cache key. Use hashFiles or similar for best results."
     required: true
   path:
+    description: "Path to cache (e.g. node_modules, .next, build)."
     required: true
   bucket:
+    description: "S3 bucket name to store cache."
     required: true
   region:
+    description: "AWS region for the S3 bucket. If empty, cache is skipped."
     required: false
 
 outputs:
   cache-hit:
+    description: "true if cache was restored, false otherwise."
     value: ${{ steps.main.outputs.cache-hit }}
 
 runs:
